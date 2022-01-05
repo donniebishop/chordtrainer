@@ -70,3 +70,13 @@ def test_chord_scale_generator():
     scale = MajorScale(Natural('E'))
     for c in chords:
         assert c in scale.chords
+
+def test_laziness_chord():
+    foo = Min7Chord('A#')
+    bar = Min7Chord(Sharp('A#'))
+    assert foo == bar
+
+def test_laziness_scale():
+    foo = MajorScale('A#')
+    bar = MajorScale(Sharp('A#'))
+    assert foo == bar
