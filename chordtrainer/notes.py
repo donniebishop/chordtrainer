@@ -5,7 +5,7 @@ class Note:
         self.name = name
 
     def __repr__(self):
-        return str(self.name)
+        return self.name
 
     # this shit was magic and made everything work
     def __eq__(self, comp):

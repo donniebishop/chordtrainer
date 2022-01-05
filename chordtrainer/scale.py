@@ -1,18 +1,20 @@
 #!/usr/bin/python3
 
 from .notes import *
+from .chord import *
 
 class Scale:
     def __init__(self, root: Note, type: str, formula: str):
         self.root = root
         self.type = type
-        self.notes = self._set_notes(self.root, formula)
+        self.notes = self._set_notes(formula)
+        self.chords = self._gen_chords()
 
     def __repr__(self):
         return "{r} {t}".format(r=self.root, t=self.type)
     
-    def _set_notes(self, root: Note, formula: str) -> list:
-        current = root
+    def _set_notes(self, formula: str) -> list:
+        current = self.root
         notes = [current]
         for step in formula:
             if step == 'H':
@@ -36,6 +38,24 @@ class Scale:
             notes.append(next)
             current = next
         return notes
+
+    def _gen_chords(self) -> list:
+        tones = {
+            'major': 'MmmMMmd',
+            'minor': 'mdMmmMM',
+        }
+        template = tones[self.type.lower()]
+        chords = []
+        zipper = zip(self.notes, template)
+        for (root, chord) in zipper:
+            if chord == 'M':
+                c = MajChord(root)
+            elif chord == 'm':
+                c = MinChord(root)
+            elif chord == 'd':
+                c = DimChord(root)
+            chords.append(c)
+        return chords
 
 class MajorScale(Scale):
     def __init__(self, root: Note, type="Major", formula="WWHWWW"):
