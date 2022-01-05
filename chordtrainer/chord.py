@@ -3,9 +3,12 @@
 from .notes import *
 
 class Chord:
-    def __init__(self, root: Note, type: str, formula: str):
-        self.root = root
-        self.type = type
+    def __init__(self, root: Note, chord_type: str, formula: str):
+        if type(root) == str:
+            self.root = make_note(root)
+        else:
+            self.root = root
+        self.chord_type = chord_type
         self.notes = self._set_notes(formula)
         self.inversion = None
         self.slash = False
@@ -15,9 +18,9 @@ class Chord:
         if self.slash:
             return "{r}/{b}".format(r=self.root, b=self.bass)
         elif self.inversion:
-            return "{r}{t} {i} inversion".format(r=self.root, t=self.type, i=self.inversion)
+            return "{r}{t} {i} inversion".format(r=self.root, t=self.chord_type, i=self.inversion)
         else:
-            return "{r}{t}".format(r=self.root, t=self.type)
+            return "{r}{t}".format(r=self.root, t=self.chord_type)
 
     def __eq__(self, comp):
         for n in self.notes:
@@ -53,33 +56,33 @@ class Chord:
         self.bass = bass
 
 class MajChord(Chord):
-    def __init__(self, root: Note, type=' Major', formula="1,4,7"):
-        super().__init__(root, type, formula)
+    def __init__(self, root: Note, chord_type=' Major', formula="1,4,7"):
+        super().__init__(root, chord_type, formula)
 
 class MinChord(Chord):
-    def __init__(self, root: Note, type=' Minor', formula="1,3,7"):
-        super().__init__(root, type, formula)
+    def __init__(self, root: Note, chord_type=' Minor', formula="1,3,7"):
+        super().__init__(root, chord_type, formula)
 
 class DimChord(Chord):
-    def __init__(self, root: Note, type=' Diminished', formula="1,3,6"):
-        super().__init__(root, type, formula)
+    def __init__(self, root: Note, chord_type=' Diminished', formula="1,3,6"):
+        super().__init__(root, chord_type, formula)
 
 class Maj7Chord(Chord):
-    def __init__(self, root: Note, type='maj7', formula="1,4,7,11"):
-        super().__init__(root, type, formula)
+    def __init__(self, root: Note, chord_type='maj7', formula="1,4,7,11"):
+        super().__init__(root, chord_type, formula)
 
 class Min7Chord(Chord):
-    def __init__(self, root: Note, type='m7', formula="1,3,7,10"):
-        super().__init__(root, type, formula)
+    def __init__(self, root: Note, chord_type='m7', formula="1,3,7,10"):
+        super().__init__(root, chord_type, formula)
 
 class Dom7Chord(Chord):
-    def __init__(self, root: Note, type='7', formula="1,4,7,10"):
-        super().__init__(root, type, formula)
+    def __init__(self, root: Note, chord_type='7', formula="1,4,7,10"):
+        super().__init__(root, chord_type, formula)
 
 class M7b5Chord(Chord):
-    def __init__(self, root: Note, type='m7b5', formula="1,3,6,10"):
-        super().__init__(root, type, formula)
+    def __init__(self, root: Note, chord_type='m7b5', formula="1,3,6,10"):
+        super().__init__(root, chord_type, formula)
 
 class Dim7Chord(Chord):
-    def __init__(self, root: Note, type='dim7', formula="1,3,6,9"):
-        super().__init__(root, type, formula)
+    def __init__(self, root: Note, chord_type='dim7', formula="1,3,6,9"):
+        super().__init__(root, chord_type, formula)
