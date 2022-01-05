@@ -88,3 +88,8 @@ def test_laziness_scale():
     foo = MajorScale('A#')
     bar = MajorScale(Sharp('A#'))
     assert foo == bar
+
+def test_laziness_chord_in_scale():
+    foo = MinorScale('F')
+    bar = MinChord('Bb')
+    assert bar == foo.chords[3]
