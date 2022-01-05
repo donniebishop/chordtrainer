@@ -79,3 +79,7 @@ class Dom7Chord(Chord):
 class M7b5Chord(Chord):
     def __init__(self, root: Note, type='m7b5', formula="1,3,6,10"):
         super().__init__(root, type, formula)
+
+class Dim7Chord(Chord):
+    def __init__(self, root: Note, type='dim7', formula="1,3,6,9"):
+        super().__init__(root, type, formula)
