@@ -9,6 +9,12 @@ class Scale:
             self.root = make_note(root)
         else:
             self.root = root
+
+        if type(self.root) is Flat:
+            self.prefer_flat = True
+        else:
+            self.prefer_flat = False
+        
         self.scale_type = scale_type
         self.notes = self._set_notes(formula)
         self.chords = self._gen_chords()
@@ -19,24 +25,23 @@ class Scale:
     def _set_notes(self, formula: str) -> list:
         current = self.root
         notes = [current]
+
+        if self.prefer_flat:
+            chromatic = CHROMATIC.flats
+        else:
+            chromatic = CHROMATIC.sharps
+
         for step in formula:
             if step == 'H':
-                next_index = CHROMATIC.notes.index(current) + 1
+                next_index = chromatic.index(current) + 1
             elif step == 'W':
-                next_index = CHROMATIC.notes.index(current) + 2
-
-            # use sharps or flats
-            # if scale_type(self.root) == Accidental:
-            #     if self.root not in SHARPS:
-            #         chrom = chromatic.flats
-            # else:
-            #     chrom = chromatic.sharps
+                next_index = chromatic.index(current) + 2
 
             # account for chromatic list wraparound
             try:
-                next = CHROMATIC[next_index]
+                next = chromatic[next_index]
             except IndexError:
-                next = CHROMATIC[next_index - 12]
+                next = chromatic[next_index - 12]
 
             notes.append(next)
             current = next
