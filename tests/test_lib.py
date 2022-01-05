@@ -1,4 +1,5 @@
 import random
+import pytest
 from chordtrainer.notes import *
 from chordtrainer.scale import *
 from chordtrainer.chord import *
@@ -14,15 +15,6 @@ def test_globals():
 def test_enharmonic():
     assert Sharp('C#') == Flat('Db')
 
-def test_chord_constructor():
-    notes = ['G','B','D','F#']
-    random.shuffle(notes)
-    note_objs = [Note(n) for n in notes]
-    chord = Maj7Chord(Natural('G'))
-
-    for n in note_objs:
-        assert n in chord.notes
-
 def test_chord_compare():
     chord1 = MajChord('D')
     chord2 = MinChord('D')
@@ -30,6 +22,21 @@ def test_chord_compare():
 
     assert chord1 != chord2
     assert chord1 == chord3
+
+@pytest.mark.parametrize(
+    "notes,chord_type", [
+        (['G','B','D'], MajChord),
+        (['F','A','C','E'], Maj7Chord),
+        # (['F#','A#','C#','E#'], Maj7Chord),   # doesn't know how to deal with E#/Fb or other enharmonics
+        (['Bb','Db','F','Ab'], Min7Chord),
+        (['D','F#','A','C'], Dom7Chord)
+    ])
+def test_chord_constructor(notes, chord_type):
+    chord = chord_type(Note(notes[0]))
+    random.shuffle(notes)
+    note_objs = [Note(n) for n in notes]
+    for n in note_objs:
+        assert n in chord.notes
 
 def test_scale_constructor():
     notes = ['B','C#','D#','E','F#','G#','A#']
@@ -52,6 +59,5 @@ def test_chord_scale_generator():
     ]
     random.shuffle(chords)
     scale = MajorScale(Natural('E'))
-
     for c in chords:
         assert c in scale.chords
