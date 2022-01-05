@@ -4,14 +4,17 @@ from .notes import *
 from .chord import *
 
 class Scale:
-    def __init__(self, root: Note, type: str, formula: str):
-        self.root = root
-        self.type = type
+    def __init__(self, root: Note, scale_type: str, formula: str):
+        if type(root) is str:
+            self.root = make_note(root)
+        else:
+            self.root = root
+        self.scale_type = scale_type
         self.notes = self._set_notes(formula)
         self.chords = self._gen_chords()
 
     def __repr__(self):
-        return "{r} {t}".format(r=self.root, t=self.type)
+        return "{r} {t}".format(r=self.root, t=self.scale_type)
     
     def _set_notes(self, formula: str) -> list:
         current = self.root
@@ -23,7 +26,7 @@ class Scale:
                 next_index = CHROMATIC.notes.index(current) + 2
 
             # use sharps or flats
-            # if type(self.root) == Accidental:
+            # if scale_type(self.root) == Accidental:
             #     if self.root not in SHARPS:
             #         chrom = chromatic.flats
             # else:
@@ -44,7 +47,7 @@ class Scale:
             'major': 'MmmMMmd',
             'minor': 'mdMmmMM',
         }
-        template = templates[self.type.lower()]
+        template = templates[self.scale_type.lower()]
         chords = []
         zipper = zip(self.notes, template)
         for (root, chord) in zipper:
@@ -58,14 +61,14 @@ class Scale:
         return chords
 
 class MajorScale(Scale):
-    def __init__(self, root: Note, type="Major", formula="WWHWWW"):
-        super().__init__(root, type, formula)
+    def __init__(self, root: Note, scale_type="Major", formula="WWHWWW"):
+        super().__init__(root, scale_type, formula)
 
 class MinorScale(Scale):
-    def __init__(self, root: Note, type="Minor", formula="WHWWHW"):
-        super().__init__(root, type, formula)
+    def __init__(self, root: Note, scale_type="Minor", formula="WHWWHW"):
+        super().__init__(root, scale_type, formula)
 
 # doesn't work with W H
 # class MinorPentatonicScale(Scale):
-#     def __init__(self, root: Note, type="Minor", formula="WHWWHW"):
-#         super().__init__(root, type, formula)
+#     def __init__(self, root: Note, scale_type="Minor", formula="WHWWHW"):
+#         super().__init__(root, scale_type, formula)
