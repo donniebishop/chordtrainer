@@ -8,8 +8,14 @@ class Chord:
             self.root = make_note(root)
         else:
             self.root = root
-        self.chord_type = chord_type
+
+        if type(self.root) == Flat:
+            self.prefer_flat = True
+        else:
+            self.prefer_flat = False
+
         self.notes = self._set_notes(formula)
+        self.chord_type = chord_type
         self.inversion = None
         self.slash = False
         self.bass = None
@@ -33,16 +39,20 @@ class Chord:
 
     def _set_notes(self, formula: str) -> list:
         notes = [self.root]
+        if self.prefer_flat:
+            chromatic = CHROMATIC.flats
+        else:
+            chromatic = CHROMATIC.sharps
         for num in formula.split(','):
             if int(num) == 1:
                 continue
-            note_index = CHROMATIC.notes.index(self.root) + (int(num))
+            note_index = chromatic.index(self.root) + (int(num))
 
             # account for chromatic list wraparound
             try:
-                note = CHROMATIC.notes[note_index]
+                note = chromatic[note_index]
             except IndexError:
-                note = CHROMATIC.notes[note_index - 12]
+                note = chromatic[note_index - 12]
             notes.append(note)
         return notes
 
