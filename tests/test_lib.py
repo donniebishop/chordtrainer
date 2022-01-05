@@ -11,6 +11,8 @@ def test_globals():
     assert NATURALS[4] == Natural('E')
     assert SHARPS[0] == Accidental('A#')
     assert FLATS[3] == Flat('Eb')
+    assert MajChord in TRIADS
+    assert Dim7Chord in SEVENTH_CHORDS
 
 def test_enharmonic():
     assert Sharp('C#') == Flat('Db')
@@ -21,7 +23,7 @@ def test_enharmonic():
         ('Bb', Flat),
         ('C#', Sharp)
     ])
-def test_makenote(note, note_type):
+def test_make_note(note, note_type):
     assert type(make_note(note)) is note_type
 
 def test_chord_compare():

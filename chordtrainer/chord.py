@@ -96,3 +96,6 @@ class M7b5Chord(Chord):
 class Dim7Chord(Chord):
     def __init__(self, root: Note, chord_type='dim7', formula="1,3,6,9"):
         super().__init__(root, chord_type, formula)
+
+TRIADS = [MajChord, MinChord, DimChord]
+SEVENTH_CHORDS = [Maj7Chord, Min7Chord, Dom7Chord, Dim7Chord]
