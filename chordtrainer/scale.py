@@ -21,6 +21,15 @@ class Scale:
 
     def __repr__(self):
         return "{r} {t}".format(r=self.root, t=self.scale_type)
+
+    def __getitem__(self, key):
+        return self.notes[key]
+
+    def __eq__(self, comp):
+        for n in self.notes:
+            if n not in comp:
+                return False
+        return True
     
     def _set_notes(self, formula: str) -> list:
         current = self.root
