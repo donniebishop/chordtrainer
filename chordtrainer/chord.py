@@ -19,13 +19,14 @@ class Chord:
         else:
             return "{r}{t}".format(r=self.root, t=self.type)
 
-    # def __eq__(self, comp):
-    #     for n in self.notes:
-    #         if n not in comp.notes:
-    #             return False
-    #             break
-    #         else:
-    #             return True
+    def __eq__(self, comp):
+        for n in self.notes:
+            if n not in comp:
+                return False
+        return True
+
+    def __getitem__(self, key):
+        return self.notes[key]
 
     def _set_notes(self, formula: str) -> list:
         notes = [self.root]
@@ -40,7 +41,6 @@ class Chord:
             except IndexError:
                 note = CHROMATIC.notes[note_index - 12]
             notes.append(note)
-
         return notes
 
     def _set_inversion(self, inversion: int):
