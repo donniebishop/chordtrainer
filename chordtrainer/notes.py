@@ -51,28 +51,21 @@ class Flat(Accidental):
     def __eq__(self, comp) -> bool:
         return (self.sharp == comp) or (self.flat == comp)
 
-# def convert_accidental(note: Accidental) -> Accidental:
-#     if type(note) is Sharp:
-#         return 
+def make_note(name: str, type: str = None) -> Note:
+    if len(name) > 3:
+        raise ValueError
+    if name.endswith('#') or (type == 'sharp'):
+        return Sharp(name)
+    elif name.endswith('b') or (type == 'flat'):
+        return Flat(name)
+    else:
+        return Natural(name)
 
 class Chromatic():
     def __init__(self) -> None:
-        self.notes = [
-            Natural('A'),
-            Sharp('A#'),
-            Natural('B'),
-            Natural('C'),
-            Sharp('C#'),
-            Natural('D'),
-            Sharp('D#'),
-            Natural('E'),
-            Natural('F'),
-            Sharp('F#'),
-            Natural('G'),
-            Sharp('G#'),
-        ]
-        self.sharps = self.notes
-        self.flats = [Flat(note.flat) if type(note) is Sharp else note for note in self.notes]
+        self.sharps = [make_note(n) for n in "A,A#,B,C,C#,D,D#,E,F,F#,G,G#".split(',')]
+        self.flats = [make_note(n) for n in "Ab,A,Bb,B,C,Db,D,Eb,E,F,Gb,G".split(',')]
+        self.notes = self.sharps
 
     def __repr__(self):
         return self.notes
@@ -82,26 +75,6 @@ class Chromatic():
         return self.notes[key]
 
 CHROMATIC = Chromatic()
-NATURALS = [
-    Natural('A'),
-    Natural('B'),
-    Natural('C'),
-    Natural('D'),
-    Natural('E'),
-    Natural('F'),
-    Natural('G')
-]
-SHARPS = [
-    Sharp('A#'),
-    Sharp('C#'),
-    Sharp('D#'),
-    Sharp('F#'),
-    Sharp('G#')
-]
-FLATS = [
-    Flat('Ab'),
-    Flat('Bb'),
-    Flat('Db'),
-    Flat('Eb'),
-    Flat('Gb'),
-]
+NATURALS = [make_note(n, 'natural') for n in "ABCDEFG"]
+SHARPS = [make_note(n,'sharp') for n in "A#,C#,D#,F#,G#".split(',')]
+FLATS = [make_note(n,'flat') for n in "Ab,Bb,Db,Eb,Gb".split(',')]

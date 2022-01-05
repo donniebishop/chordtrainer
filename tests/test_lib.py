@@ -15,11 +15,20 @@ def test_globals():
 def test_enharmonic():
     assert Sharp('C#') == Flat('Db')
 
-def test_chord_compare():
-    chord1 = MajChord('D')
-    chord2 = MinChord('D')
-    chord3 = MajChord('D')
+@pytest.mark.parametrize(
+    "note, note_type", [
+        ('A', Natural),
+        ('Bb', Flat),
+        ('C#', Sharp)
+    ])
+def test_makenote(note, note_type):
+    assert type(make_note(note)) is note_type
 
+def test_chord_compare():
+    d = Natural('D')
+    chord1 = MajChord(d)
+    chord2 = MinChord(d)
+    chord3 = MajChord(d)
     assert chord1 != chord2
     assert chord1 == chord3
 
@@ -32,16 +41,16 @@ def test_chord_compare():
         (['D','F#','A','C'], Dom7Chord)
     ])
 def test_chord_constructor(notes, chord_type):
-    chord = chord_type(Note(notes[0]))
+    chord = chord_type(make_note(notes[0]))
     random.shuffle(notes)
-    note_objs = [Note(n) for n in notes]
+    note_objs = [make_note(n) for n in notes]
     for n in note_objs:
         assert n in chord.notes
 
 def test_scale_constructor():
     notes = ['B','C#','D#','E','F#','G#','A#']
     random.shuffle(notes)
-    note_objs = [Note(n) for n in notes]
+    note_objs = [make_note(n) for n in notes]
     scale = MajorScale(Natural('B'))
 
     for n in note_objs:
