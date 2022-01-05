@@ -47,6 +47,12 @@ def test_chord_constructor(notes, chord_type):
     for n in note_objs:
         assert n in chord.notes
 
+# this test is really cool cuz it proves I can check for modality
+def test_scale_compare():
+    scale_x = MinorScale(Natural('A'))
+    scale_y = MajorScale(Natural('C'))
+    assert scale_x == scale_y
+
 def test_scale_constructor():
     notes = ['B','C#','D#','E','F#','G#','A#']
     random.shuffle(notes)
