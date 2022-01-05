@@ -4,7 +4,7 @@ class Note:
     def __init__(self, name: str):
         self.name = name
 
-    def __repr__(self):
+    def __str__(self):
         return self.name
 
     # this shit was magic and made everything work
@@ -66,9 +66,6 @@ class Chromatic():
         self.sharps = [make_note(n) for n in "A,A#,B,C,C#,D,D#,E,F,F#,G,G#".split(',')]
         self.flats = [make_note(n) for n in "Ab,A,Bb,B,C,Db,D,Eb,E,F,Gb,G".split(',')]
         self.notes = self.sharps
-
-    def __repr__(self):
-        return self.notes
 
     # needed for indexing
     def __getitem__(self, key):

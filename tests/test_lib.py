@@ -33,7 +33,7 @@ def test_chord_compare():
     assert chord1 == chord3
 
 @pytest.mark.parametrize(
-    "notes,chord_type", [
+    "notes, chord_type", [
         (['G','B','D'], MajChord),
         (['F','A','C','E'], Maj7Chord),
         # (['F#','A#','C#','E#'], Maj7Chord),   # doesn't know how to deal with E#/Fb or other enharmonics

@@ -19,7 +19,7 @@ class Scale:
         self.notes = self._set_notes(formula)
         self.chords = self._gen_chords()
 
-    def __repr__(self):
+    def __str__(self):
         return "{r} {t}".format(r=self.root, t=self.scale_type)
 
     def __getitem__(self, key):

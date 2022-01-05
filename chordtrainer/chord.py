@@ -20,7 +20,7 @@ class Chord:
         self.slash = False
         self.bass = None
 
-    def __repr__(self):
+    def __str__(self):
         if self.slash:
             return "{r}/{b}".format(r=self.root, b=self.bass)
         elif self.inversion:
