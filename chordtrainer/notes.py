@@ -18,13 +18,17 @@ class Natural(Note):
 class Accidental(Note):
     def __init__(self, name: str) -> Note:
         super().__init__(name)
-        sharps = {
-            'Ab': 'G#',
-            'Bb': 'A#',
-            'Db': 'C#',
-            'Eb': 'D#',
-            'Gb': 'F#'
-        }
+
+        # TODO: Accidental construction fails if given a flat
+        # sharps = {
+        #     'Ab': 'G#',
+        #     'Bb': 'A#',
+        #     'Db': 'C#',
+        #     'Eb': 'D#',
+        #     'Gb': 'F#'
+        # }
+        # self.sharp = sharps[self.name]
+
         flats = {
             'A#': 'Bb',
             'C#': 'Db',
@@ -32,7 +36,7 @@ class Accidental(Note):
             'F#': 'Gb',
             'G#': 'Ab',
         }
-        self.sharp = sharps[self.name]
+        self.sharp = self.name
         self.flat = flats[self.name]
 
     def __eq__(self, comp):
