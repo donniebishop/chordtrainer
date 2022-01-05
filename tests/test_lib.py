@@ -4,13 +4,15 @@ from chordtrainer.scale import *
 from chordtrainer.chord import *
 
 def test_chromatic():
-    assert CHROMATIC[6] == Accidental('D#')
+    assert CHROMATIC[6] == Note('D#')
 
-def test_naturals():
+def test_globals():
     assert NATURALS[4] == Natural('E')
-
-def test_sharps():
     assert SHARPS[0] == Accidental('A#')
+    assert FLATS[3] == Flat('Eb')
+
+def test_enharmonic():
+    assert Sharp('C#') == Flat('Db')
 
 def test_chord_constructor():
     notes = ['G','B','D','F#']

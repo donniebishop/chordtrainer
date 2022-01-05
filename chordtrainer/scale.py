@@ -40,11 +40,11 @@ class Scale:
         return notes
 
     def _gen_chords(self) -> list:
-        tones = {
+        templates = {
             'major': 'MmmMMmd',
             'minor': 'mdMmmMM',
         }
-        template = tones[self.type.lower()]
+        template = templates[self.type.lower()]
         chords = []
         zipper = zip(self.notes, template)
         for (root, chord) in zipper:

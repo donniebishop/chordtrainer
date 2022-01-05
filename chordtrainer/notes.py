@@ -1,34 +1,27 @@
 #!/usr/bin/python3
 
 class Note:
-    def __init__(self, name: str) -> None:
+    def __init__(self, name: str):
         self.name = name
 
     def __repr__(self):
         return self.name
 
     # this shit was magic and made everything work
-    def __eq__(self, comp):
+    def __eq__(self, comp) -> bool:
         return self.name == comp
 
 class Natural(Note):
-    def __init__(self, name: str) -> Note:
+    def __init__(self, name: str):
         super().__init__(name)
 
 class Accidental(Note):
-    def __init__(self, name: str) -> Note:
+    def __init__(self, name: str):
         super().__init__(name)
 
-        # TODO: Accidental construction fails if given a flat
-        # sharps = {
-        #     'Ab': 'G#',
-        #     'Bb': 'A#',
-        #     'Db': 'C#',
-        #     'Eb': 'D#',
-        #     'Gb': 'F#'
-        # }
-        # self.sharp = sharps[self.name]
-
+class Sharp(Accidental):
+    def __init__(self, name: str):
+        super().__init__(name)
         flats = {
             'A#': 'Bb',
             'C#': 'Db',
@@ -39,27 +32,47 @@ class Accidental(Note):
         self.sharp = self.name
         self.flat = flats[self.name]
 
-    def __eq__(self, comp):
+    def __eq__(self, comp) -> bool:
         return (self.sharp == comp) or (self.flat == comp)
+
+class Flat(Accidental):
+    def __init__(self, name: str):
+        super().__init__(name)
+        sharps = {
+            'Ab': 'G#',
+            'Bb': 'A#',
+            'Db': 'C#',
+            'Eb': 'D#',
+            'Gb': 'F#'
+        }
+        self.flat = self.name
+        self.sharp = sharps[self.name]
+
+    def __eq__(self, comp) -> bool:
+        return (self.sharp == comp) or (self.flat == comp)
+
+# def convert_accidental(note: Accidental) -> Accidental:
+#     if type(note) is Sharp:
+#         return 
 
 class Chromatic():
     def __init__(self) -> None:
         self.notes = [
             Natural('A'),
-            Accidental('A#'),
+            Sharp('A#'),
             Natural('B'),
             Natural('C'),
-            Accidental('C#'),
+            Sharp('C#'),
             Natural('D'),
-            Accidental('D#'),
+            Sharp('D#'),
             Natural('E'),
             Natural('F'),
-            Accidental('F#'),
+            Sharp('F#'),
             Natural('G'),
-            Accidental('G#'),
+            Sharp('G#'),
         ]
         self.sharps = self.notes
-        self.flats = [note.flat if type(note) == Accidental else note for note in self.notes]
+        self.flats = [Flat(note.flat) if type(note) is Sharp else note for note in self.notes]
 
     def __repr__(self):
         return self.notes
@@ -79,9 +92,16 @@ NATURALS = [
     Natural('G')
 ]
 SHARPS = [
-    Accidental('A#'),
-    Accidental('C#'),
-    Accidental('D#'),
-    Accidental('F#'),
-    Accidental('G#')
+    Sharp('A#'),
+    Sharp('C#'),
+    Sharp('D#'),
+    Sharp('F#'),
+    Sharp('G#')
+]
+FLATS = [
+    Flat('Ab'),
+    Flat('Bb'),
+    Flat('Db'),
+    Flat('Eb'),
+    Flat('Gb'),
 ]
