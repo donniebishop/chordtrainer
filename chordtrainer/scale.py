@@ -41,19 +41,14 @@ class Scale:
             chromatic = CHROMATIC.sharps
 
         for step in formula:
-            if step == 'H':
-                next_index = chromatic.index(current) + 1
-            elif step == 'W':
-                next_index = chromatic.index(current) + 2
-
-            # account for chromatic list wraparound
-            try:
+            next_index = chromatic.index(current) + int(step)
+            try: # account for chromatic list wraparound
                 next = chromatic[next_index]
             except IndexError:
                 next = chromatic[next_index - 12]
-
             notes.append(next)
             current = next
+
         return notes
 
     def _gen_chords(self) -> list:
@@ -75,14 +70,16 @@ class Scale:
         return chords
 
 class MajorScale(Scale):
-    def __init__(self, root: Note, scale_type="Major", formula="WWHWWW"):
+    def __init__(self, root: Note, scale_type="Major", formula="221222"):
         super().__init__(root, scale_type, formula)
 
 class MinorScale(Scale):
-    def __init__(self, root: Note, scale_type="Minor", formula="WHWWHW"):
+    def __init__(self, root: Note, scale_type="Minor", formula="212212"):
         super().__init__(root, scale_type, formula)
 
-# doesn't work with W H
-# class MinorPentatonicScale(Scale):
-#     def __init__(self, root: Note, scale_type="Minor", formula="WHWWHW"):
-#         super().__init__(root, scale_type, formula)
+# okay so now the scale formulas are fixed
+# but I have no idea what I'm gonna do about chord scales
+# _gen_chords() about to get real ugly
+class MinorPentatonicScale(Scale):
+    def __init__(self, root: Note, scale_type="Minor Pentatonic", formula="3223"):
+        super().__init__(root, scale_type, formula)
