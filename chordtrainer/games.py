@@ -47,11 +47,30 @@ def get_user_input_notes(choose: int) -> list:
     user_notes = []
     while len(user_notes) < choose:
         choice = input("Enter note: ")
+        if len(choice) > 2:
+            print("Please only enter one note at a time!")
+            continue
         user_notes.append(make_note(choice))
     return user_notes 
 
-def chord_trainer():
-    pass
+def chord_trainer(retry: int = 3) -> None:
+    chances = retry
+    target_chord = generate_random_chord()
+    correct_notes = target_chord.notes
+    print(f"What notes are in {target_chord}?")
 
-def scale_trainer():
+    while chances:
+        user_notes = get_user_input_notes(choose=len(correct_notes))
+        if user_notes == target_chord.notes:
+            print('Correct!')
+            break
+        else:
+            print('Wrong! Try again!\n')
+            chances -= 1
+    
+    if chances == 0:
+        correct_note_names = [note.name for note in correct_notes]
+        print(f"Sorry, the correct answer is {correct_note_names}.")
+
+def scale_trainer() -> None:
     pass
