@@ -4,6 +4,9 @@ from chordtrainer.notes import *
 from chordtrainer.scale import *
 from chordtrainer.chord import *
 
+# Notes
+# ----------
+
 def test_chromatic():
     assert CHROMATIC[6] == Note('D#')
 
@@ -21,10 +24,14 @@ def test_enharmonic():
     "note, note_type", [
         ('A', Natural),
         ('Bb', Flat),
-        ('C#', Sharp)
+        ('C#', Sharp),
+        ('Cb', Natural) # calls helper bcef_accidentals()
     ])
 def test_make_note(note, note_type):
     assert type(make_note(note)) is note_type
+
+# Chords
+# ----------
 
 def test_chord_compare():
     d = Natural('D')
@@ -38,7 +45,7 @@ def test_chord_compare():
     "notes, chord_type", [
         (['G','B','D'], MajChord),
         (['F','A','C','E'], Maj7Chord),
-        # (['F#','A#','C#','E#'], Maj7Chord),   # doesn't know how to deal with E#/Fb or other enharmonics
+        (['F#','A#','C#','E#'], Maj7Chord),   # doesn't know how to deal with E#/Fb or other enharmonics
         (['Bb','Db','F','Ab'], Min7Chord),
         (['D','F#','A','C'], Dom7Chord)
     ])
@@ -48,6 +55,9 @@ def test_chord_constructor(notes, chord_type):
     note_objs = [make_note(n) for n in notes]
     for n in note_objs:
         assert n in chord.notes
+
+# Scale
+# ----------
 
 # this test is really cool cuz it proves I can check for modality
 def test_scale_compare():
@@ -78,6 +88,9 @@ def test_chord_scale_generator():
     scale = MajorScale(Natural('E'))
     for c in chords:
         assert c in scale.chords
+
+# Misc
+# ----------
 
 def test_laziness_chord():
     foo = Min7Chord('A#')

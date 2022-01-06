@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 class Note:
+    # TODO: raise Input/ValueError if input str doesn't match r"^[A-G][#|b]?$"
     def __init__(self, name: str):
         self.name = name
 
@@ -51,9 +52,20 @@ class Flat(Accidental):
     def __eq__(self, comp) -> bool:
         return (self.sharp == comp) or (self.flat == comp)
 
+def bcef_accidentals(name: str) -> Natural:
+    conversion = {
+        'B#': Natural('C'),
+        'Cb': Natural('B'),
+        'E#': Natural('F'),
+        'Fb': Natural('E'),
+    }
+    return conversion[name]
+
 def make_note(name: str, type: str = None) -> Note:
     if len(name) > 3:
         raise ValueError
+    if name in ['B#','Cb','E#','Fb']:
+        return bcef_accidentals(name)
     if name.endswith('#') or (type == 'sharp'):
         return Sharp(name)
     elif name.endswith('b') or (type == 'flat'):
