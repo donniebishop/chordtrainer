@@ -47,10 +47,15 @@ def get_user_input_notes(choose: int) -> list:
     user_notes = []
     while len(user_notes) < choose:
         choice = input("Enter note: ")
-        if len(choice) > 2:
+        try:
+            # wow i actually can't believe this works
+            choices = choice.split(' ')
+            for note in choices:
+                if len(note) > 2:
+                    raise IndexError
+                user_notes.append(make_note(note))
+        except IndexError:
             print("Please only enter one note at a time!")
-            continue
-        user_notes.append(make_note(choice))
     return user_notes 
 
 def check_answer(guess: list, answer: list) -> bool:
