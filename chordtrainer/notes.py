@@ -84,6 +84,6 @@ class Chromatic():
         return self.notes[key]
 
 CHROMATIC = Chromatic()
-NATURALS = [make_note(n, 'natural') for n in "ABCDEFG"]
-SHARPS = [make_note(n,'sharp') for n in "A#,C#,D#,F#,G#".split(',')]
-FLATS = [make_note(n,'flat') for n in "Ab,Bb,Db,Eb,Gb".split(',')]
+NATURALS = [n for n in CHROMATIC.notes if type(n) == Natural]
+SHARPS = [n for n in CHROMATIC.sharps if type(n) == Sharp]
+FLATS = [n for n in CHROMATIC.flats if type(n) == Flat] 
