@@ -60,6 +60,13 @@ def test_chord_constructor(notes, chord_type):
     for n in note_objs:
         assert n in chord.notes
 
+def test_chord_extended_constructor():
+    chord = MajExtChord(make_note('C'), '9')
+    notes = [make_note(note) for note in ['C','G','E','B','D']]
+    random.shuffle(notes)
+    for n in notes:
+        assert n in chord.notes
+
 # Scale
 # ----------
 

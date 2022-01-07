@@ -87,6 +87,16 @@ class Maj7Chord(Chord):
     def __init__(self, root: Note, chord_type='maj7', formula=[0,4,7,11]):
         super().__init__(root, chord_type, formula)
 
+class MajExtChord(Chord):
+    def __init__(self, root: Note, ext: str):
+        chord_type = "maj7"
+        formula = [0,4,7,11]
+        formula.append(ext_to_semitones[ext])
+        chord_type += ext
+        if ('6' in chord_type) or ('9' in chord_type):
+            chord_type.strip('7')
+        super().__init__(root, chord_type, formula)
+
 class Min7Chord(Chord):
     def __init__(self, root: Note, chord_type='m7', formula=[0,3,7,10]):
         super().__init__(root, chord_type, formula)
@@ -103,5 +113,18 @@ class Dim7Chord(Chord):
     def __init__(self, root: Note, chord_type='dim7', formula=[0,3,6,9]):
         super().__init__(root, chord_type, formula)
 
+ext_to_semitones = {
+    'b9': 1,
+    '9': 2,
+    '11': 5,
+    '#11': 6,
+    'b5': 6,
+    '#5': 8,
+    'b13': 8,
+    '6': 9,
+    '13': 9,
+}
+
 TRIADS = [MajChord, MinChord, DimChord]
 SEVENTH_CHORDS = [Maj7Chord, Min7Chord, Dom7Chord, Dim7Chord]
+EXTENDED = [MajExtChord]#, MinExtChord, DomExtChord]
