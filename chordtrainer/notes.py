@@ -9,11 +9,11 @@ class Note:
         else:
             self.name = name
 
+    def __repr__(self):
+        return f"<Note: {self.name}>"
+
     def __str__(self):
         return self.name
-
-    def __repr__(self):
-        return f"<note: {self.name} {self.__class__}>"
 
     # this shit was magic and made everything work
     def __eq__(self, comp) -> bool:
@@ -22,6 +22,9 @@ class Note:
 class Natural(Note):
     def __init__(self, name: str):
         super().__init__(name)
+
+    def __repr__(self):
+        return f"<Natural: {self.name}>"
 
 class Accidental(Note):
     def __init__(self, name: str):
@@ -40,6 +43,9 @@ class Sharp(Accidental):
         self.sharp = self.name
         self.flat = flats[self.name]
 
+    def __repr__(self):
+        return f"<Sharp: {self.name}>"
+
     def __eq__(self, comp) -> bool:
         return (self.sharp == comp) or (self.flat == comp)
 
@@ -55,6 +61,9 @@ class Flat(Accidental):
         }
         self.flat = self.name
         self.sharp = sharps[self.name]
+
+    def __repr__(self):
+        return f"<Flat: {self.name}>"
 
     def __eq__(self, comp) -> bool:
         return (self.sharp == comp) or (self.flat == comp)

@@ -16,6 +16,9 @@ class Chord:
         self.slash = False
         self.bass = None
 
+    def __repr__(self) -> str:
+        return f"<Chord root: {self.root}, chord_type: {self.chord_type.strip()}>"
+
     def __str__(self):
         if self.slash:
             return "{r}/{b}".format(r=self.root, b=self.bass)

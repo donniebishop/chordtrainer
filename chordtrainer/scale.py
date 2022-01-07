@@ -19,6 +19,9 @@ class Scale:
         self.notes = self._set_notes(formula)
         self.chords = self._gen_chords()
 
+    def __repr__(self) -> str:
+        return f"<Scale root: {self.root}, scale_type: {self.scale_type}"
+
     def __str__(self):
         return "{r} {t}".format(r=self.root, t=self.scale_type)
 
