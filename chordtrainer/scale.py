@@ -23,7 +23,7 @@ class Scale:
         return f"<Scale root: {self.root}, scale_type: {self.scale_type}"
 
     def __str__(self):
-        return "{r} {t}".format(r=self.root, t=self.scale_type)
+        return f"{self.root} {self.scale_type}"
 
     def __getitem__(self, key):
         return self.notes[key]

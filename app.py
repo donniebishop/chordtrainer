@@ -23,7 +23,7 @@ def main():
         if mode == 1:
             chord_trainer()
         else:
-            print("Sorry, mode {} is currently under construction.\n".format(mode))
+            print(f"Sorry, mode {mode} is currently under construction.\n")
         mode = mode_select()
 
 main()

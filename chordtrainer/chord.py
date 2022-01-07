@@ -21,11 +21,11 @@ class Chord:
 
     def __str__(self):
         if self.slash:
-            return "{r}/{b}".format(r=self.root, b=self.bass)
+            return f"{self.root}/{self.bass}"
         elif self.inversion:
-            return "{r}{t} {i} inversion".format(r=self.root, t=self.chord_type, i=self.inversion)
+            return f"{self.root}{self.chord_type} {self.inversion} inversion"
         else:
-            return "{r}{t}".format(r=self.root, t=self.chord_type)
+            return f"{self.root}{self.chord_type}"
 
     def __eq__(self, other):
         return self._is_subset(other) and other._is_subset(self)
