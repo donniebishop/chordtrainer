@@ -11,11 +11,16 @@ def generate_random_note() -> Note:
     note = random.choice(chromatic)
     return note
 
-def generate_random_chord(root: Note = None, include_sevenths: bool = False) -> Chord:
+def generate_random_chord(root: Note = None, difficulty: int = 1) -> Chord:
     # setup type pool and choose chord
-    chord_types =  TRIADS
-    if include_sevenths:
-        chord_types += SEVENTH_CHORDS
+    difficulty_levels = [
+        TRIADS,
+        SEVENTH_CHORDS,
+        #EXTENDED
+    ]
+    chord_types = []
+    for level in range(difficulty):
+        chord_types = [chord for chord in difficulty_levels[level]]
     chord = random.choice(chord_types) 
     
     # pick random note if not provided
@@ -73,16 +78,15 @@ def check_notes(guess: list, answer: Chord) -> bool:
     return True
 
 def chord_trainer(lives: int = 3) -> None:
-    try:
-        if input("Include seventh chords? (y/N): ") == 'y':
-            sev_bool = True
-        else:
-            sev_bool = False
-    except ValueError:
-        sev_bool = False
+    level = 0
+    while not (1 <= level <= 3):
+        try:
+            level = int(input("Choose Difficulty Level (1-3): "))
+        except ValueError:
+            pass
 
     score = 0
-    answer = generate_random_chord(include_sevenths=sev_bool)
+    answer = generate_random_chord(difficulty=level)
     print(f"What notes are in {answer}?")
 
     while lives:
@@ -91,7 +95,7 @@ def chord_trainer(lives: int = 3) -> None:
             print('Correct!\n')
             score += 1
             guesses = []
-            answer = generate_random_chord(include_sevenths=sev_bool)
+            answer = generate_random_chord(difficulty=level)
             print(f"What notes are in {answer}?")
         else:
             lives -= 1
