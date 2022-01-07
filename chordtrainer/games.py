@@ -43,8 +43,10 @@ def generate_random_scale(root: Note = None, difficulty: int = 1) -> Scale:
     # generate scale
     return scale(root)
 
-def get_user_input_notes(choose: int) -> list:
-    user_notes = []
+def get_user_input_notes(choose: int) -> set:
+    # use set to get dedup for "free"
+    # requires __hash__() to be defined for any custom classes in the set
+    user_notes = set()
     while len(user_notes) < choose:
         choice = input("Enter note: ")
         try:
@@ -53,7 +55,7 @@ def get_user_input_notes(choose: int) -> list:
             for note in choices:
                 if len(note) > 2:
                     raise IndexError
-                user_notes.append(make_note(note))
+                user_notes.add(make_note(note))
         except IndexError:
             print("Please only enter one note at a time!")
     return user_notes 

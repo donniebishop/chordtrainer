@@ -30,6 +30,9 @@ class Chord:
     def __eq__(self, other):
         return self._is_subset(other) and other._is_subset(self)
 
+    def __hash__(self) -> int:
+        return hash((self.root, self.chord_type))
+
     def __getitem__(self, key):
         return self.notes[key]
 

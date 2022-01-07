@@ -19,6 +19,9 @@ class Note:
     def __eq__(self, comp) -> bool:
         return self.name == comp
 
+    def __hash__(self) -> int:
+        return hash(self.name)
+
 class Natural(Note):
     def __init__(self, name: str):
         super().__init__(name)
@@ -29,6 +32,10 @@ class Natural(Note):
 class Accidental(Note):
     def __init__(self, name: str):
         super().__init__(name)
+
+    # for when i actually move self.sharp and self.flat into this class
+    # def __hash__(self) -> int:
+    #     return hash((self.sharp, self.flat))
 
 class Sharp(Accidental):
     def __init__(self, name: str):
@@ -49,6 +56,10 @@ class Sharp(Accidental):
     def __eq__(self, comp) -> bool:
         return (self.sharp == comp) or (self.flat == comp)
 
+    # overriding __eq__() sets __hash__() to return None
+    def __hash__(self) -> int:
+        return super().__hash__()
+
 class Flat(Accidental):
     def __init__(self, name: str):
         super().__init__(name)
@@ -67,6 +78,10 @@ class Flat(Accidental):
 
     def __eq__(self, comp) -> bool:
         return (self.sharp == comp) or (self.flat == comp)
+
+    # overriding __eq__() sets __hash__() to return None
+    def __hash__(self) -> int:
+        return super().__hash__()
 
 def bcef_accidentals(name: str) -> Natural:
     conversion = {
