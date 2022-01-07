@@ -91,7 +91,7 @@ def test_chord_scale_generator():
     random.shuffle(chords)
     scale = MajorScale(Natural('E'))
     for c in chords:
-        assert c in scale.chords
+        assert c in scale.chords.values()
 
 # Misc
 # ----------
@@ -107,6 +107,8 @@ def test_laziness_scale():
     assert foo == bar
 
 def test_laziness_chord_in_scale():
+    # because I had to implement __hash__, as an ancillary benefit
+    # I can now use the actual chord number as the index (Bb is the IV of F)
     foo = MinorScale('F')
     bar = MinChord('Bb')
-    assert bar == foo.chords[3]
+    assert bar == foo.chords[4]

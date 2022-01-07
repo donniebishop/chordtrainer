@@ -54,22 +54,22 @@ class Scale:
 
         return notes
 
-    def _gen_chords(self) -> list:
+    def _gen_chords(self) -> dict:
         templates = {
             'major': 'MmmMMmd',
             'minor': 'mdMmmMM',
         }
         template = templates[self.scale_type.lower()]
-        chords = []
-        zipper = zip(self.notes, template)
-        for (root, chord) in zipper:
+        chords = dict()
+        zipper = zip(self.notes, template, range(len(template)))
+        for (root, chord, index) in zipper:
+            index += 1
             if chord == 'M':
-                c = MajChord(root)
+                chords[index] = MajChord(root)
             elif chord == 'm':
-                c = MinChord(root)
+                chords[index] = MinChord(root)
             elif chord == 'd':
-                c = DimChord(root)
-            chords.append(c)
+                chords[index] = DimChord(root)
         return chords
 
 class MajorScale(Scale):
