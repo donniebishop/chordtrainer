@@ -122,7 +122,6 @@ class Dim7Chord(Chord):
     def __init__(self, root: Note, chord_type='dim7', formula=[0,3,6,9]):
         super().__init__(root, chord_type, formula)
 
-# can use regex r"[#b]?1?\d"g to split extensions
 ext_to_semitones = {
     'b9': 1,
     '9': 2,

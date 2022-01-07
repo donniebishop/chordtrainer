@@ -4,7 +4,7 @@ import re
 
 class Note:
     def __init__(self, name: str):
-        if not re.findall('^[A-G][#|b]?', name):
+        if not re.findall(r"^[A-G][#|b]?", name):
             raise ValueError
         else:
             self.name = name
