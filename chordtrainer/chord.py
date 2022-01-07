@@ -9,11 +9,7 @@ class Chord:
         else:
             self.root = root
 
-        if type(self.root) == Flat:
-            self.prefer_flat = True
-        else:
-            self.prefer_flat = False
-
+        self.prefer_flat = type(self.root) is Flat
         self.notes = self._set_notes(formula)
         self.chord_type = chord_type
         self.inversion = None
@@ -46,7 +42,7 @@ class Chord:
         for num in formula.split(','):
             if int(num) == 1:
                 continue
-            note_index = chromatic.index(self.root) + (int(num))
+            note_index = chromatic.index(self.root) + int(num)
 
             # account for chromatic list wraparound
             try:

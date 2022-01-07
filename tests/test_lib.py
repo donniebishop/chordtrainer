@@ -45,7 +45,7 @@ def test_chord_compare():
     "notes, chord_type", [
         (['G','B','D'], MajChord),
         (['F','A','C','E'], Maj7Chord),
-        (['F#','A#','C#','E#'], Maj7Chord),   # doesn't know how to deal with E#/Fb or other enharmonics
+        (['F#','A#','C#','E#'], Maj7Chord),
         (['Bb','Db','F','Ab'], Min7Chord),
         (['D','F#','A','C'], Dom7Chord)
     ])
