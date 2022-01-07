@@ -1,9 +1,13 @@
 #!/usr/bin/python3
 
+import re
+
 class Note:
-    # TODO: raise Input/ValueError if input str doesn't match r"^[A-G][#|b]?$"
     def __init__(self, name: str):
-        self.name = name
+        if not re.findall('^[A-G][#|b]?', name):
+            raise ValueError
+        else:
+            self.name = name
 
     def __str__(self):
         return self.name
