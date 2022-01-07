@@ -102,6 +102,38 @@ def chord_trainer(lives: int = 3) -> None:
             else:
                 print(f"Wrong! Try again! {lives} lives remaining!\n")
     
+# Scale Trainer
+# ----------------
 
-def scale_trainer() -> None:
+def get_user_input_chord() -> Chord:
     pass
+
+def check_chord_in_scale(guess: Chord, answer: Scale) -> bool:
+    return guess in list(answer.chords.values)
+
+def scale_trainer(lives: int = 3) -> None:
+    level = 0
+    while not (1 <= level <= 5):
+        try:
+            level = int(input("Choose Difficulty Level (1-5): "))
+        except ValueError:
+            pass
+    
+    score = 0
+    scale = generate_random_scale(difficulty=level)
+    answer = random.choice(list(scale.chords.values()))
+    print("QUESTION?")
+
+    while lives:
+        guess = get_user_input_chord()
+        if check_chord_in_scale(guess, scale):
+            score += 1
+            guess = None
+            scale = generate_random_scale(difficulty=level)
+            print("QUESTION?")
+        else:
+            lives -= 1
+            if lives <= 0:
+                print(f"Your final score was: {score}")
+            else:
+                print(f"Wrong! Try again! {lives} lives remaining!\n")
