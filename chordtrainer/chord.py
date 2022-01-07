@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+import re
 from .notes import *
 
 class Chord:
@@ -88,13 +89,21 @@ class Maj7Chord(Chord):
         super().__init__(root, chord_type, formula)
 
 class MajExtChord(Chord):
-    def __init__(self, root: Note, ext: str):
+    def __init__(self, root: Note, extensions: str):
         chord_type = "maj7"
         formula = [0,4,7,11]
-        formula.append(ext_to_semitones[ext])
-        chord_type += ext
+
+        # match extensions
+        ext = re.findall(r"[#b]?1?\d", extensions)
+        for e in ext:
+            formula.append(ext_to_semitones[e])
+            chord_type += e
+
+        # fix 6/9 chord notation (nice)
         if ('6' in chord_type) or ('9' in chord_type):
-            chord_type.strip('7')
+            chord_type = chord_type.replace('7','')
+
+        # holy shit i can't believe this works
         super().__init__(root, chord_type, formula)
 
 class Min7Chord(Chord):
@@ -113,6 +122,7 @@ class Dim7Chord(Chord):
     def __init__(self, root: Note, chord_type='dim7', formula=[0,3,6,9]):
         super().__init__(root, chord_type, formula)
 
+# can use regex r"[#b]?1?\d"g to split extensions
 ext_to_semitones = {
     'b9': 1,
     '9': 2,
