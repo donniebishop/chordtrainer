@@ -22,10 +22,11 @@ def test_enharmonic():
 
 @pytest.mark.parametrize(
     "note, note_type", [
-        ('A', Natural),
         ('Bb', Flat),
+        ('B', Natural),
+        ('B#', Natural), # calls helper bcef_accidentals()
         ('C#', Sharp),
-        ('Cb', Natural) # calls helper bcef_accidentals()
+        ('db', Flat) # lazy eval
     ])
 def test_make_note(note, note_type):
     assert type(make_note(note)) is note_type

@@ -62,8 +62,12 @@ def bcef_accidentals(name: str) -> Natural:
     return conversion[name]
 
 def make_note(name: str, type: str = None) -> Note:
+    # sanitize input
+    name = name.capitalize()
     if len(name) > 3:
         raise ValueError
+
+    # build note
     if name in ['B#','Cb','E#','Fb']:
         return bcef_accidentals(name)
     if name.endswith('#') or (type == 'sharp'):
