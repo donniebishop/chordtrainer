@@ -3,6 +3,9 @@ from .notes import *
 from .chord import TRIADS, SEVENTH_CHORDS
 from .scale import *
 
+# Utils
+# --------
+
 def generate_random_note() -> Note:
     chromatic = random.choice([CHROMATIC.sharps, CHROMATIC.flats])
     note = random.choice(chromatic)
@@ -43,6 +46,9 @@ def generate_random_scale(root: Note = None, difficulty: int = 1) -> Scale:
     # generate scale
     return scale(root)
 
+# Chord Trainer
+# ----------------
+
 def get_user_input_notes(choose: int) -> set:
     # use set to get dedup for "free"
     # requires __hash__() to be defined for any custom classes in the set
@@ -60,30 +66,39 @@ def get_user_input_notes(choose: int) -> set:
             print("Please only enter one note at a time!")
     return user_notes 
 
-def check_answer(guess: list, answer: list) -> bool:
+def check_notes(guess: list, answer: Chord) -> bool:
     for note in guess:
-        if note not in answer:
+        if note not in answer.notes:
             return False
     return True
 
 def chord_trainer(lives: int = 3) -> None:
-    target = generate_random_chord()
-    answer = target.notes
-    print(f"What notes are in {target}?")
+    try:
+        if input("Include seventh chords? (y/N): ") == 'y':
+            sev_bool = True
+        else:
+            sev_bool = False
+    except ValueError:
+        sev_bool = False
+
+    score = 0
+    answer = generate_random_chord(include_sevenths=sev_bool)
+    print(f"What notes are in {answer}?")
 
     while lives:
-        guesses = get_user_input_notes(choose=len(answer))
-        if check_answer(guesses, answer):
+        guesses = get_user_input_notes(choose=len(answer.notes))
+        if check_notes(guesses, answer):
             print('Correct!\n')
+            score += 1
             guesses = []
-            target = generate_random_chord()
-            answer = target.notes
-            print(f"What notes are in {target}?")
+            answer = generate_random_chord(include_sevenths=sev_bool)
+            print(f"What notes are in {answer}?")
         else:
             lives -= 1
             if lives == 0:
-                correct_notes = [note.name for note in answer]
-                print(f"Sorry, the correct answer is {correct_notes}.\n")
+                correct_notes = [str(note) for note in answer.notes]
+                print(f"Sorry, the correct answer is: {correct_notes}.\n")
+                print(f"Your final score was: {score}")
             else:
                 print(f"Wrong! Try again! {lives} lives remaining!\n")
     
