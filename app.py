@@ -1,6 +1,6 @@
 #!/usr/bin/python3 
 
-from chordtrainer.games import chord_trainer
+from chordtrainer.games import chord_trainer, scale_trainer
 
 def mode_select() -> int:
     print("Choose a Mode:")
@@ -17,13 +17,15 @@ def mode_select() -> int:
             mode = None
     return mode
 
-def main():
+if __name__ == "__main__":
     mode = mode_select()
     while mode != 0:
-        if mode == 1:
-            chord_trainer()
-        else:
+        modes = {
+            1: chord_trainer,
+            2: scale_trainer
+        }
+        try:
+            modes[mode]()
+        except ValueError:
             print(f"Sorry, mode {mode} is currently under construction.\n")
         mode = mode_select()
-
-main()
