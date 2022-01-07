@@ -8,6 +8,9 @@ class Note:
     def __str__(self):
         return self.name
 
+    def __repr__(self):
+        return f"<note: {self.name} {self.__class__}>"
+
     # this shit was magic and made everything work
     def __eq__(self, comp) -> bool:
         return self.name == comp
