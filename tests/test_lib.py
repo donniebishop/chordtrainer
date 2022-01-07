@@ -35,12 +35,15 @@ def test_make_note(note, note_type):
 # ----------
 
 def test_chord_compare():
-    d = Natural('D')
-    chord1 = MajChord(d)
-    chord2 = MinChord(d)
-    chord3 = MajChord(d)
+    f = Natural('F')
+    a = Natural('A')
+    chord1 = MajChord(f)
+    chord2 = MinChord(a)
+    chord3 = Maj7Chord(f)
+    chord4 = MajChord(f)
     assert chord1 != chord2
-    assert chord1 == chord3
+    assert chord2 != chord3
+    assert chord4 == chord1
 
 @pytest.mark.parametrize(
     "notes, chord_type", [

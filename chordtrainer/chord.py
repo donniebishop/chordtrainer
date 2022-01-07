@@ -24,14 +24,17 @@ class Chord:
         else:
             return "{r}{t}".format(r=self.root, t=self.chord_type)
 
-    def __eq__(self, comp):
-        for n in self.notes:
-            if n not in comp:
-                return False
-        return True
+    def __eq__(self, other):
+        return self._is_subset(other) and other._is_subset(self)
 
     def __getitem__(self, key):
         return self.notes[key]
+
+    def _is_subset(self, other):
+        for n in self.notes:
+            if n not in other:
+                return False
+        return True
 
     def _set_notes(self, formula: str) -> list:
         notes = [self.root]
