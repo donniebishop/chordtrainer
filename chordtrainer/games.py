@@ -1,4 +1,5 @@
 import random
+from typing import List, Set
 from .notes import *
 from .chord import TRIADS, SEVENTH_CHORDS
 from .scale import *
@@ -54,7 +55,7 @@ def generate_random_scale(root: Note = None, difficulty: int = 1) -> Scale:
 # Chord Trainer
 # ----------------
 
-def get_user_input_notes(choose: int) -> set:
+def get_user_input_notes(choose: int) -> Set[Note]:
     # use set to get dedup for "free"
     # requires __hash__() to be defined for any custom classes in the set
     user_notes = set()
@@ -71,7 +72,7 @@ def get_user_input_notes(choose: int) -> set:
             print("Please only enter one note at a time!")
     return user_notes 
 
-def check_notes(guess: list, answer: Chord) -> bool:
+def check_notes(guess: List[Note], answer: Chord) -> bool:
     for note in guess:
         if note not in answer.notes:
             return False

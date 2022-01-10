@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 
 import re
+from typing import List
 from .notes import *
 
 class Chord:
-    def __init__(self, root: Note, chord_type: str, formula: list):
+    def __init__(self, root: Note, chord_type: str, formula: List[int]):
         if type(root) == str:
             self.root = make_note(root)
         else:
@@ -43,7 +44,7 @@ class Chord:
                 return False
         return True
 
-    def _set_notes(self, formula: list) -> list:
+    def _set_notes(self, formula: List[int]) -> List[int]:
         notes = [self.root]
         if self.prefer_flat:
             chromatic = CHROMATIC.flats
@@ -118,7 +119,7 @@ class ExtendedChord(Chord):
         # holy shit i can't believe this works
         super().__init__(root, chord_name, formula)
 
-def convert_extensions(extension_str: str) -> list[int]:
+def convert_extensions(extension_str: str) -> List[int]:
     semitones = []
     ext_to_semitones = {
         'b9': 1,

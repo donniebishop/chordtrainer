@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+from typing import List, Dict
 from .notes import *
 from .chord import *
 
@@ -25,7 +26,7 @@ class Scale:
     def __str__(self):
         return f"{self.root} {self.scale_type}"
 
-    def __getitem__(self, key):
+    def __getitem__(self, key) -> Note:
         return self.notes[key]
 
     def __eq__(self, comp):
@@ -34,7 +35,7 @@ class Scale:
                 return False
         return True
     
-    def _set_notes(self, formula: str) -> list:
+    def _set_notes(self, formula: str) -> List[int]:
         current = self.root
         notes = [current]
 
@@ -54,7 +55,7 @@ class Scale:
 
         return notes
 
-    def _gen_chords(self) -> dict:
+    def _gen_chords(self) -> Dict[int, Chord]:
         templates = {
             'major': 'MmmMMmd',
             'minor': 'mdMmmMM',
