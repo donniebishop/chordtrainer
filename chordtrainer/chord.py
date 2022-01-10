@@ -88,24 +88,6 @@ class Maj7Chord(Chord):
     def __init__(self, root: Note, chord_type='maj7', formula=[0,4,7,11]):
         super().__init__(root, chord_type, formula)
 
-class MajExtChord(Chord):
-    def __init__(self, root: Note, extensions: str):
-        chord_type = "maj7"
-        formula = [0,4,7,11]
-
-        # match extensions
-        ext = re.findall(r"[#b]?1?\d", extensions)
-        for e in ext:
-            formula.append(ext_to_semitones[e])
-            chord_type += e
-
-        # fix 6/9 chord notation (nice)
-        if ('6' in chord_type) or ('9' in chord_type):
-            chord_type = chord_type.replace('7','')
-
-        # holy shit i can't believe this works
-        super().__init__(root, chord_type, formula)
-
 class Min7Chord(Chord):
     def __init__(self, root: Note, chord_type='m7', formula=[0,3,7,10]):
         super().__init__(root, chord_type, formula)
@@ -122,18 +104,42 @@ class Dim7Chord(Chord):
     def __init__(self, root: Note, chord_type='dim7', formula=[0,3,6,9]):
         super().__init__(root, chord_type, formula)
 
-ext_to_semitones = {
-    'b9': 1,
-    '9': 2,
-    '11': 5,
-    '#11': 6,
-    'b5': 6,
-    '#5': 8,
-    'b13': 8,
-    '6': 9,
-    '13': 9,
-}
+class ExtendedChord(Chord):
+    def __init__(self, root: Note, chord_type: str, extension_string: str):
+        formulas = {
+            'major': ('maj',[0,4,7,11]),
+            'minor': ('m',[0,3,7,10]),
+            'dominant': ('',[0,4,7,10])
+        }
+        chord_name, formula = formulas[chord_type]
+        extensions = convert_extensions(extension_string)
+        formula += extensions
+
+        # holy shit i can't believe this works
+        super().__init__(root, chord_name, formula)
+
+def convert_extensions(extension_str: str) -> list[int]:
+    semitones = []
+    ext_to_semitones = {
+        'b9': 1,
+        '9': 2,
+        '11': 5,
+        '#11': 6,
+        'b5': 6,
+        '#5': 8,
+        'b13': 8,
+        '6': 9,
+        '13': 9,
+    }
+
+    if extension_str == None:
+        raise ValueError
+    else:
+        regex = re.findall(r"[#b]?1?\d", extension_str)
+        for ext in regex:
+            semitones.append(ext_to_semitones[ext])
+    return semitones
 
 TRIADS = [MajChord, MinChord, DimChord]
 SEVENTH_CHORDS = [Maj7Chord, Min7Chord, Dom7Chord, Dim7Chord]
-EXTENDED = [MajExtChord]#, MinExtChord, DomExtChord]
+#EXTENDED = [MajExtChord], MinExtChord, DomExtChord]
