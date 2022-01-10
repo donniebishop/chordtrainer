@@ -114,6 +114,7 @@ class ExtendedChord(Chord):
         }
         chord_name, formula = formulas[chord_type]
         extensions = convert_extensions(extension_string)
+        chord_name += extension_string
         formula += extensions
 
         # holy shit i can't believe this works
@@ -126,8 +127,6 @@ def convert_extensions(extension_str: str) -> List[int]:
         '9': 2,
         '11': 5,
         '#11': 6,
-        'b5': 6,
-        '#5': 8,
         'b13': 8,
         '6': 9,
         '13': 9,
@@ -143,4 +142,4 @@ def convert_extensions(extension_str: str) -> List[int]:
 
 TRIADS = [MajChord, MinChord, DimChord]
 SEVENTH_CHORDS = [Maj7Chord, Min7Chord, Dom7Chord, Dim7Chord]
-#EXTENDED = [MajExtChord], MinExtChord, DomExtChord]
+EXTENDED  = [ExtendedChord]
