@@ -92,6 +92,15 @@ def bcef_accidentals(name: str) -> Natural:
     }
     return conversion[name]
 
+# god I was really trying to avoid making this
+def double_sharp_flat(name: str) -> Note:
+    if name.endswith('##'):
+        doublesharp = NATURALS.index(name[0].upper()) + 1
+        return NATURALS[doublesharp]
+    elif name.endswith('bb'):
+        doubleflat = NATURALS.index(name[0].upper()) - 1
+        return NATURALS[doubleflat]
+
 def make_note(name: str, type: str = None) -> Note:
     # sanitize input
     name = name.capitalize()
@@ -101,7 +110,9 @@ def make_note(name: str, type: str = None) -> Note:
     # build note
     if name in ['B#','Cb','E#','Fb']:
         return bcef_accidentals(name)
-    if name.endswith('#') or (type == 'sharp'):
+    elif (name.endswith('##')) or (name.endswith('bb')):
+        return double_sharp_flat(name)
+    elif name.endswith('#') or (type == 'sharp'):
         return Sharp(name)
     elif name.endswith('b') or (type == 'flat'):
         return Flat(name)

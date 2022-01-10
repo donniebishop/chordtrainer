@@ -26,7 +26,9 @@ def test_enharmonic():
         ('B', Natural),
         ('B#', Natural), # calls helper bcef_accidentals()
         ('C#', Sharp),
-        ('db', Flat) # lazy eval
+        ('db', Flat), # lazy eval
+        ('Ebb', Natural), # double flat
+        ('F##', Natural) # double sharp
     ])
 def test_make_note(note, note_type):
     assert type(make_note(note)) is note_type
