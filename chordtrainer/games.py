@@ -1,7 +1,8 @@
 import random
 from typing import List, Set
+
 from .notes import *
-from .chord import TRIADS, SEVENTH_CHORDS
+from .chord import TRIADS, SEVENTH_CHORDS, EXTENDED
 from .scale import *
 
 # Utils
@@ -17,11 +18,9 @@ def generate_random_chord(root: Note = None, difficulty: int = 1) -> Chord:
     difficulty_levels = [
         TRIADS,
         SEVENTH_CHORDS,
-        #EXTENDED
+        EXTENDED,
     ]
-    chord_types = []
-    for level in range(difficulty):
-        chord_types = [chord for chord in difficulty_levels[level]]
+    chord_types = difficulty_levels[difficulty-1]
     chord = random.choice(chord_types) 
     
     # pick random note if not provided
@@ -29,7 +28,16 @@ def generate_random_chord(root: Note = None, difficulty: int = 1) -> Chord:
         root = generate_random_note()
 
     # generate chord
-    return chord(root)
+    if difficulty == 3:
+        base_chord = random.choice(['major','minor','dominant'])
+        extension = generate_random_chord_extension()
+        return chord(root, base_chord, extension)
+    else:
+        return chord(root)
+
+def generate_random_chord_extension() -> str:
+    extensions = ['b9','9','11','#11','b13','6','13']
+    return random.choice(extensions)
 
 def generate_random_scale(root: Note = None, difficulty: int = 1) -> Scale:
     # setup type pool and choose scale
@@ -82,7 +90,7 @@ def chord_trainer(lives: int = 3) -> None:
     level = 0
     while not (1 <= level <= 3):
         try:
-            level = int(input("Choose Difficulty Level (1-3): "))
+            level = int(input("Choose difficulty level (1-3): "))
         except ValueError:
             pass
 
