@@ -75,7 +75,7 @@ def get_user_input_notes(choose: int = 3, _debug: bool = False, _notes: List[Not
         choice = input("Enter note: ")
         try:
             # wow i actually can't believe this works
-            choices = choice.split(' ')
+            choices = choice.strip().split(' ')
             for note in choices:
                 if len(note) > 2:
                     raise IndexError
@@ -112,12 +112,12 @@ def chord_trainer(lives: int = 3) -> None:
             print(f"What notes are in {answer}?")
         else:
             lives -= 1
-            if lives == 0:
-                correct_notes = [str(note) for note in answer.notes]
-                print(f"Sorry, the correct answer is: {correct_notes}.\n")
-                print(f"Your final score was: {score}")
-            else:
+            if lives:
                 print(f"Wrong! Try again! {lives} lives remaining!\n")
+    else:
+        correct_notes = [str(note) for note in answer.notes]
+        print(f"\nSorry, the correct answer is: {correct_notes}")
+        print(f"Your final score was: {score}")
     
 # Scale Trainer
 # ----------------
@@ -150,7 +150,6 @@ def generate_scale_trainer_answer(d_level: int) -> Tuple[Scale, int, Chord]:
     chord = scale.chords[number]
     return (scale, number, chord)
 
-
 def scale_trainer(lives: int = 3) -> None:
     level = 0
     while not (1 <= level <= 5):
@@ -175,8 +174,8 @@ def scale_trainer(lives: int = 3) -> None:
             print(f"What is the {number} chord in the {scale.root} {scale.scale_type} scale")
         else:
             lives -= 1
-            if lives <= 0:
-                print(f"Sorry, the correct answer is {answer}\n")
-                print(f"Your final score was: {score}")
-            else:
+            if lives:
                 print(f"Wrong! Try again! {lives} lives remaining!\n")
+    else:
+        print(f"\nSorry, the correct answer is: {answer}")
+        print(f"Your final score was: {score}")
