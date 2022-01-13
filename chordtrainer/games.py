@@ -1,5 +1,5 @@
 import random
-from typing import List, Set
+from typing import List, Set, Tuple
 
 from .notes import *
 from .chord import TRIADS, SEVENTH_CHORDS, EXTENDED
@@ -122,11 +122,34 @@ def chord_trainer(lives: int = 3) -> None:
 # Scale Trainer
 # ----------------
 
-def get_user_input_chord() -> Chord:
-    pass
+def get_user_input_chord(_debug: bool = False, _chord: Chord = None) -> Chord:
+    # for testing, otherwise shouldn't be used
+    if _debug and _chord != False:
+        return _chord
+    
+    guess = input('Enter a chord: ')
+    note, chord_type = guess.split(' ')  # only works for triads, need regex to match 7ths
+    root = make_note(note)
+    if chord_type.lower() == 'major':
+        chord = MajChord(root)
+    elif chord_type.lower() == 'minor':
+        chord = MinChord(root)
+    elif chord_type.lower() == 'diminished':
+        chord = DimChord(root)
+    return chord
 
 def check_chord_in_scale(guess: Chord, answer: Scale) -> bool:
-    return guess in list(answer.chords.values)
+    return guess in list(answer.chords.values())
+
+def check_chord_is_correct(guess: Chord, answer: Chord) -> bool:
+    return guess == answer
+
+def generate_scale_trainer_answer(d_level: int) -> Tuple[Scale, int, Chord]:
+    scale = generate_random_scale(difficulty=d_level)
+    number = random.choice(list(scale.chords.keys()))
+    chord = scale.chords[number]
+    return (scale, number, chord)
+
 
 def scale_trainer(lives: int = 3) -> None:
     level = 0
@@ -134,23 +157,26 @@ def scale_trainer(lives: int = 3) -> None:
         try:
             level = int(input("Choose Difficulty Level (1-5): "))
         except ValueError:
-            pass
+            level = 1
     
     score = 0
-    scale = generate_random_scale(difficulty=level)
-    answer = random.choice(list(scale.chords.values()))
-    print("QUESTION?")
+    scale, number, answer = generate_scale_trainer_answer(level)
+    print(f"What is the {number} chord in the {scale.root} {scale.scale_type} scale")
 
     while lives:
         guess = get_user_input_chord()
-        if check_chord_in_scale(guess, scale):
+        in_scale = check_chord_in_scale(guess, scale)
+        is_correct = check_chord_is_correct(guess, answer)
+        if in_scale and is_correct:
+            print('Correct!\n')
             score += 1
             guess = None
-            scale = generate_random_scale(difficulty=level)
-            print("QUESTION?")
+            scale, number, answer = generate_scale_trainer_answer(level)
+            print(f"What is the {number} chord in the {scale.root} {scale.scale_type} scale")
         else:
             lives -= 1
             if lives <= 0:
+                print(f"Sorry, the correct answer is {answer}\n")
                 print(f"Your final score was: {score}")
             else:
                 print(f"Wrong! Try again! {lives} lives remaining!\n")

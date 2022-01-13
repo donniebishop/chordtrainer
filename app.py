@@ -6,7 +6,7 @@ def mode_select() -> int:
     print("\nChoose a Mode:")
     print("--------------")
     print("1: Chord Tones")
-    print("2: Scale Tones")
+    print("2: Scale Chords")
     print("0: Quit")
 
     mode = None
@@ -28,7 +28,7 @@ if __name__ == "__main__":
         try:
             modes[mode]()
         except ValueError:
-            # when you're in a mode, if you submit an empty string during input()
+            # when you're in a game mode, if you submit an empty string during input()
             # this incidentally will catch the ValueError and act as a sort of quit-out.
             # it's not a bug. it's a feature.
             print(f"Sorry, mode {mode} is currently under construction.\n")
