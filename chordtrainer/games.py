@@ -63,7 +63,11 @@ def generate_random_scale(root: Note = None, difficulty: int = 1) -> Scale:
 # Chord Trainer
 # ----------------
 
-def get_user_input_notes(choose: int) -> Set[Note]:
+def get_user_input_notes(choose: int = 3, _debug: bool = False, _notes: List[Note] = None) -> Set[Note]:
+    # for testing, otherwise shouldn't be used
+    if _notes != None and _debug:
+        return _notes
+
     # use set to get dedup for "free"
     # requires __hash__() to be defined for any custom classes in the set
     user_notes = set()
