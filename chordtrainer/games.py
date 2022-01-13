@@ -138,17 +138,25 @@ def get_user_input_chord(_debug: bool = False, _chord: Chord = None) -> Chord:
         chord = DimChord(root)
     return chord
 
+def interval_to_roman(interval: int) -> str:
+    roman = ['i','ii','iii','iv','v','vi','vii']
+    return roman[interval - 1]
+
 def check_chord_in_scale(guess: Chord, answer: Scale) -> bool:
     return guess in list(answer.chords.values())
 
 def check_chord_is_correct(guess: Chord, answer: Chord) -> bool:
     return guess == answer
 
-def generate_scale_trainer_answer(d_level: int) -> Tuple[Scale, int, Chord]:
+def generate_scale_trainer_answer(d_level: int) -> Tuple[Scale, Chord]:
     scale = generate_random_scale(difficulty=d_level)
     number = random.choice(list(scale.chords.keys()))
     chord = scale.chords[number]
-    return (scale, number, chord)
+    roman = interval_to_roman(number)
+    if chord.chord_type == ' Major':
+        roman = roman.upper()
+    print(f"What is the {roman} chord in the {scale.root} {scale.scale_type} scale")
+    return (scale, chord)
 
 def scale_trainer(lives: int = 3) -> None:
     level = 0
@@ -159,8 +167,7 @@ def scale_trainer(lives: int = 3) -> None:
             level = 1
     
     score = 0
-    scale, number, answer = generate_scale_trainer_answer(level)
-    print(f"What is the {number} chord in the {scale.root} {scale.scale_type} scale")
+    scale, answer = generate_scale_trainer_answer(level)
 
     while lives:
         guess = get_user_input_chord()
@@ -170,8 +177,7 @@ def scale_trainer(lives: int = 3) -> None:
             print('Correct!\n')
             score += 1
             guess = None
-            scale, number, answer = generate_scale_trainer_answer(level)
-            print(f"What is the {number} chord in the {scale.root} {scale.scale_type} scale")
+            scale, answer = generate_scale_trainer_answer(level)
         else:
             lives -= 1
             if lives:

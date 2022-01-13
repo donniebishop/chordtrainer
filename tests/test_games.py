@@ -28,3 +28,6 @@ def test_get_input_notes():
 
 def test_chord_trainer():
     pass
+
+def test_interval_to_roman():
+    assert interval_to_roman(3) == 'iii'
