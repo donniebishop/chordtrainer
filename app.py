@@ -7,6 +7,7 @@ def mode_select() -> int:
     print("--------------")
     print("1: Chord Tones")
     print("2: Scale Chords")
+    print("3: Chord Progression")
     print("0: Quit")
 
     mode = None
@@ -23,7 +24,8 @@ if __name__ == "__main__":
     while mode != 0:
         modes = {
             1: chord_trainer,
-            2: scale_trainer
+            2: scale_trainer,
+            # 3: chord_progression,
         }
         try:
             modes[mode]()

@@ -185,3 +185,9 @@ def scale_trainer(lives: int = 3) -> None:
     else:
         print(f"\nSorry, the correct answer is: {answer}")
         print(f"Your final score was: {score}")
+
+# Chord Progression
+# -------------------
+
+# Game will generate chord progression "A-B-C" in a given scale and you have to identify the chord intervals like ii-V-I
+# could even generate only common progressions like ii-V-I, I-IV-V-vi, vii-III-vi
