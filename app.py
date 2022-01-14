@@ -1,4 +1,4 @@
-#!/usr/bin/python3 
+#!/usr/bin/env python3 
 
 from chordtrainer.games import chord_trainer, scale_trainer
 
