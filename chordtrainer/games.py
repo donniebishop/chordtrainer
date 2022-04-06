@@ -29,7 +29,7 @@ def generate_random_chord(root: Note = None, difficulty: int = 1) -> Chord:
 
     # generate chord
     if difficulty == 3:
-        base_chord = random.choice(['major','minor','dominant'])
+        base_chord = random.choice(['major','minor','diminished'])
         extension = generate_random_chord_extension()
         return chord(root, base_chord, extension)
     else:

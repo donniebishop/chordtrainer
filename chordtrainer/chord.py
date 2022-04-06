@@ -108,9 +108,9 @@ class Dim7Chord(Chord):
 class ExtendedChord(Chord):
     def __init__(self, root: Note, chord_type: str, extension_string: str):
         formulas = {
-            'major': ('maj',[0,4,7,11]),
-            'minor': ('m',[0,3,7,10]),
-            'dominant': ('',[0,4,7,10])
+            'major': ('maj',[0,4,7]),
+            'minor': ('m',[0,3,7]),
+            'diminished': ('dim',[0,3,6])
         }
         chord_name, formula = formulas[chord_type]
         extensions = convert_extensions(extension_string)

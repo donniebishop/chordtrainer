@@ -64,7 +64,7 @@ def test_chord_constructor(notes, chord_type):
 
 def test_chord_extended_constructor():
     chord = ExtendedChord(make_note('C'), 'major', '9#11b13')
-    notes = [make_note(note) for note in ['C','G','E','B','Ab','D','F#']]
+    notes = [make_note(note) for note in ['C','G','E','Ab','D','F#']]
     random.shuffle(notes)
     for n in notes:
         assert n in chord.notes
